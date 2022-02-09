@@ -1,0 +1,18 @@
+---
+title: "ESM 262 Assignment 1a"
+author: "Katie Munster"
+date: "2/8/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Why I'm taking this course
+
+I am taking this course because I enjoy coding and want to get better at it. I would like to enhance my computing knowledge and prepare for an internship and/or career using programming for environmental applications. I also want to gain more experience in a collaborative coding environment to sharpen those skills for future work/research opportunities.
+
+## My data science background
+
+During undergrad, I double majored in applied math and information management & technology. I took courses in R, Python, and SQL. For my undergraduate thesis, I used Python and Tableau to analyze the effect of citizen science apps on the marine plastic pollution crisis. After college, I worked as a Technology Consultant for Ernst & Young in the Cybersecurity practice. I occasionally used my data science skills, but I was not programming regularly at work. I began my studies at Bren because I realized I wanted to pursue my environmental passions and find a more fulfilling career for myself. At Bren, I have sharpened my R and GitHub skills in ESM 206 (Statistics and Data Analysis) and ESM 244 (Advanced Data Analysis).
