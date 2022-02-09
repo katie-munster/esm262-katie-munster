@@ -1,0 +1,85 @@
+---
+title: "Group E Assignment 1b"
+author: "Katie Munster"
+date: "2/9/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Group E: Katie Munster, Andrea Cornelius, Sarah Hamilton
+## Repo link: https://github.com/katie-munster/esm262-katie-munster
+
+#### Overall Contract
+
+Goal: Calculate total carbon dioxide emissions from UCSB’s transportation system (cars, buses, trucks, golf carts, boats?) per year
+
+Input: number of vehicles of each type, average mileage of each type of vehicle per year
+
+Parameters: fuel efficiency (MPG), CO2 emissions per unit of energy source (standard gasoline, diesel gasoline)
+
+Output: Total CO2 emissions for the UCSB transportation system
+
+Modules: 
+Module 1: calculate total fuel usage per vehicle type
+Module 2: calculate total emissions per vehicle type
+Module 3: calculate total transportation emissions
+Module 4: calculate total cost of fuel per vehicle type
+Module 5: calculate total cost of all fuel for UCSB
+
+#### Module 1: Calculate total fuel usage per vehicle type per year
+
+Equation: Total fuel usage = (number of vehicles*average miles traveled per year) / (fuel efficiency)
+
+Input: number of vehicles, average mileage of vehicles per year (miles)
+
+Parameter: fuel efficiency (MPG)
+
+Output: total fuel usage (gallons) per year
+
+
+#### Module 2: Calculate CO2 emissions per vehicle type
+
+Equation: Emissions for vehicle type = (Total fuel usage) * (CO2 emissions per unit fuel)
+
+Input: Module 1 result (total fuel usage)
+
+Parameter: CO2 emissions per unit fuel per year
+
+Output: Total emissions for one vehicle type per year
+
+
+#### Module 3: Total CO2 emissions of UCSB transportation system
+
+Equation: Total emissions = Sum(Emissions for each vehicle type)
+
+Input: Module 2 results (total CO2 emissions for one vehicle type per year)
+
+Output: sum of total emissions from UCSB transportation system per year
+
+
+#### Module 4: Calculate cost of fuel per vehicle type
+
+Equation: Cost of fuel for vehicle type = (Total fuel usage) * (Cost per unit fuel)
+
+Input: Module 1 results (total fuel usage)
+
+Parameter: Cost per unit fuel
+
+Output: Cost of fuel for one vehicle type per year
+
+
+#### Module 5: Total cost of UCSB fuel used for transportation
+
+Equation: Total cost = Sum(Cost of fuel for each vehicle type)
+
+Input: Module 4 results (cost of fuel per UCSB vehicle type per year)
+
+Output: total cost of UCSB fuel for transportation per year
+
+
+#### Diagram:
+See Assignment1B.jpg
+
