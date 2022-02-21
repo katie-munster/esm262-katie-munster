@@ -1,0 +1,46 @@
+---
+title: "automobile_power_generation_test"
+author: "Katie Munster"
+date: "2/14/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r}
+# source("R/automotive_power_generation.R") in console
+```
+
+```{r}
+# Write a function to compute power, given a truck of m=31752 kg (parameters for a heavy truck) for a range of different highway speeds (30 m/s, 80 km/hr, 120 km/hr, 40 km/hr, 5km/hr) The surface area is 16 m2
+
+# Convert vehicle speeds to mps (80 km/hr * 1hr/3600sec * 1000m/1km)
+
+# Save output into variable
+automotive_power_results <- automotive_power_generation(v=c(30, 22.22222, 33.33333, 11.11111, 1.388889), m=31752, a=16)
+
+# Save input of speeds into variable
+automotive_speeds <- c(30, 22.22222, 33.33333, 11.11111, 1.388889)
+```
+
+```{r}
+# Plot power as a function of speed Add a second line for lighter vehicle Remember to keep the function in its own file, store it in a subdirectory called R and then create a Rmarkdown to use the function and store the Rmarkdown in a different directory
+
+df_power <- data.frame(automotive_power_results, automotive_speeds)
+
+ggplot(data = df_power, aes(x = automotive_speeds, y = automotive_power_results)) + 
+  geom_line() +
+  theme_minimal()
+
+lighter_vehicle_power <- automotive_power_generation(v=c(30, 22.22222, 33.33333, 11.11111, 1.388889), m=2000, a=16)
+df_power_lighter_vehicle <- data.frame(automotive_power_results, lighter_vehicle_power, automotive_speeds)
+
+ggplot(data = df_power_lighter_vehicle, aes(x = automotive_speeds)) + 
+  geom_line(aes(y = lighter_vehicle_power), color = 'red') +
+  geom_line(aes(y = automotive_power_results), color = 'blue') +
+  theme_minimal()
+```
+

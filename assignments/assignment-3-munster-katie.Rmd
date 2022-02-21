@@ -1,0 +1,137 @@
+---
+title: "Assignment 3: Recreate possible_cars"
+author: "Katie Munster"
+date: "2/21/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(purrr)
+library(ggpubr)
+
+# source("~/Desktop/ESM 262/esm262-katie-munster/R/autopower.R")
+```
+
+# Recreate possible_cars, add an additional super light car with mass 5,000 kg, surface area 10m2
+
+```{r}
+possible_cars = data.frame(name = c("A","B","C", "D"),mass=c(10000,65000,38000, 5000), area = c(22,30,22, 10))
+
+# Mean speed: 100km/hr
+speed_base = 100 * 0.28
+
+possible_cars$power = autopower(V=speed_base, A = possible_cars$area, m=possible_cars$mass)
+
+head(possible_cars)
+
+# Show results                         
+ggplot(possible_cars, aes(x=mass, y=power, fill=as.factor(area)))+geom_col()+labs(y="Power W", x="Mass (kg)", fill="Area (m2)")
+```
+
+# Estimate power - by hand
+
+```{r}
+possible_cars
+
+nsample = 200
+mean_speed = log(100*0.277)
+
+speeds = rlnorm(mean=mean_speed, sd=0.1*mean_speed, nsample)
+summary(speeds)
+
+plot(density(speeds), ylab="Distribution of Speeds in (m/s)")
+
+powerA = autopower(V=speeds, A = possible_cars$area[1], m=possible_cars$mass[1])
+summary(powerA)
+
+powerB = autopower(V=speeds, A = possible_cars$area[2], m=possible_cars$mass[2])
+summary(powerB)
+
+powerC = autopower(V=speeds, A = possible_cars$area[3], m=possible_cars$mass[3])
+summary(powerC)
+
+powerD = autopower(V=speeds, A = possible_cars$area[4], m=possible_cars$mass[4])
+summary(powerD)
+
+# Combine:
+powerall1 = cbind.data.frame(powerA, powerB, powerC, powerD)
+colnames(powerall1)=possible_cars$name
+
+powerallr1 = powerall1 %>% pivot_longer(cols=everything(), names_to="car", values_to="power")
+head(powerallr1)
+
+method1_plot = ggplot(powerallr1, aes(car,power, fill=car))+geom_boxplot()+ggtitle("By Hand")
+method1_plot
+```
+
+# Estimate power - using R built in tools
+
+```{r}
+possible_cars
+
+nsample = 200
+mean_speed = log(100*0.277)
+
+speeds = rlnorm(mean=mean_speed, sd=0.1*mean_speed, nsample)
+summary(speeds)
+
+plot(density(speeds), ylab="Distribution of Speeds in (m/s)")
+
+powerall2 = pmap(list(A = possible_cars$area, m=possible_cars$mass), autopower, V=speeds)
+powerall2 = as.data.frame(powerall2, col.names=possible_cars$name)
+head(powerall2)
+
+powerallr2 = powerall2 %>% pivot_longer(cols=everything(), names_to="car", values_to="power")
+head(powerallr2)
+
+method2_plot = ggplot(powerallr2, aes(car,power, fill=car))+geom_boxplot()+ggtitle("pmap")
+method2_plot
+
+# Compare the two methods so far:
+ggarrange(method1_plot, method2_plot)
+
+powerall1 %>% map(mean)
+powerall2 %>% map(mean)
+
+# Upper 90% quantile
+powerall1 %>% map(quantile, probs=0.9)
+powerall2 %>% map(quantile, probs=0.9)
+```
+
+# Estimate power - using *for* loop
+
+```{r}
+possible_cars
+
+nsample = 200
+mean_speed = log(100*0.277)
+
+speeds = rlnorm(mean=mean_speed, sd=0.1*mean_speed, nsample)
+summary(speeds)
+
+plot(density(speeds), ylab="Distribution of Speeds in (m/s)")
+
+powerall3 = as.data.frame(matrix(nrow=length(speeds), ncol=nrow(possible_cars)))
+head(powerall3)
+
+for (i in 1:nrow(possible_cars)) {
+  powerall3[,i] = autopower(A=possible_cars$area[i], m=possible_cars$mass[i], V=speeds)
+}
+
+head(powerall3)
+colnames(powerall3)=possible_cars$name
+
+powerallr3 = powerall3 %>% pivot_longer(cols=everything(), names_to="car", values_to="power")
+head(powerallr3)
+
+method3_plot = ggplot(powerallr3, aes(car,power, fill=car))+geom_boxplot()+ggtitle("For Loop")
+
+ggarrange(method1_plot, method2_plot, method3_plot, nrow=3)
+
+powerall1 %>% map(mean)
+powerall2 %>% map(mean)
+powerall3 %>% map(mean)
+```

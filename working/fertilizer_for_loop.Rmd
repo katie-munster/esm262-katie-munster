@@ -1,0 +1,83 @@
+---
+title: "fertilizer_for_loop"
+author: "Katie Munster"
+date: "2/16/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+yield= function(fertilizer, tp) {
+  # calculate annual yield of crop
+  # TP is mean precipitation in cm
+  result = 1.8 * (fertilizer^2) - 0.5 * fertilizer + 0.3 * tp
+  return(result)
+}
+```
+
+```{r}
+fertilizers = rnorm(mean=5, sd=0.5, n=10)
+```
+
+```{r}
+precipitation_input = 20
+results = data.frame(fertilizer = fertilizers, precipitation = precipitation_input, yield = yield(fertilizer = fertilizers, tp = precipitation_input))
+```
+
+```{r}
+total_yield = 0
+for (i in 1:10){
+  total_yield = total_yield + results$yield[i]
+}
+total_yield
+```
+
+```{r}
+yield_modified= function(fertilizer, tp) {
+  # calculate annual yield of crop
+  # TP is mean precipitation in cm
+  
+  fertilizers = ifelse(fertilizers < 0, 0, fertilizers) #error handling
+  
+  tp = ifelse(tp < 0, 0, tp) #error handling
+  
+  yield_results = data.frame(fertilizer = fertilizer, precipitation = tp, yield = NA)
+  
+  annual_yield = 1.8 * (fertilizer^2) - 0.5 * fertilizer + 0.3 * tp
+  
+  yield_results$yield = annual_yield
+  
+  total_yield = 0
+  
+  for (i in 1:length(yield_results$fertilizer)){
+    total_yield = total_yield + yield_results$yield[i]
+  }
+  
+  return(total_yield)
+}
+```
+
+```{r}
+yield_modified(fertilizers, 20)
+```
+
+```{r}
+# testing
+fertilizer_test <- c(3, 4, 5)
+precipitation_test <- c(10, 20, 30)
+
+yield_modified(fertilizer_test, precipitation_test)
+
+
+results_test = data.frame(fertilizer = fertilizer_test, precipitation = precipitation_test, yield = yield(fertilizer = fertilizer_test, tp = precipitation_test))
+
+total_yield_test = 0
+for (i in 1:length(results_test$fertilizer)){
+  total_yield_test = total_yield_test + results_test$yield[i]
+}
+total_yield_test
+```
+
