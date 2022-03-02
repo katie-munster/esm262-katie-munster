@@ -1,0 +1,22 @@
+---
+title: "assignment 7 - fish"
+author: "Katie Munster"
+date: "3/1/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+```
+
+```{r}
+source("~/Desktop/ESM 262/esm262-katie-munster/R/fish.R")
+
+fish_data <- read.delim(here("assignments", "fish.txt"))
+fish_data$x <- as.factor(fish_data$x)
+results <- c(fish_function(fish_data$x))
+results
+```
+

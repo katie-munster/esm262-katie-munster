@@ -1,0 +1,29 @@
+---
+title: "mannings_test"
+author: "Katie Munster"
+date: "2/28/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+source("~/Desktop/ESM 262/esm262-katie-munster/R/mannings.R")
+```
+
+```{r}
+mannings(r=1, n=.2, s=1)
+```
+
+```{r}
+r_vals <- runif(10, min = 0, max = 10)
+n_vals <- runif(10, min = 0, max = 10)
+s_vals <- runif(10, min = 0, max = 10)
+
+df <- data.frame(r = r_vals, n = n_vals, s = s_vals, q = NA)
+
+for (i in 1:length(r_vals)){
+    df[i,4] = mannings(r = df$r[i], n = df$n[i], s = df$s[i])
+}
+```
+
