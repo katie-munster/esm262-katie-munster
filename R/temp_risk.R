@@ -42,7 +42,7 @@ temp_risk = function(temp, threshold_unsafe_potential = 24, threshold_dangerous 
     ((frequency_life_threatening/length(temp))*.5)) + weight + (age*2))/100
 
   # return results as a list
-  results = list(frequency_unsafe_potential_temp = frequency_unsafe, frequency_dangerous_temp = frequency_dangerous,
+  results = list(frequency_potentially_unsafe_temp = frequency_unsafe, frequency_dangerous_temp = frequency_dangerous,
                                frequency_life_threatening_temp = frequency_life_threatening, risk_of_heatstroke = risk)
   return(results)
 }

@@ -27,7 +27,3 @@ temp_data <- read_tsv("tmax.txt") %>%
 ```{r}
 temp_risk(temp = temp_data$temp, weight = 45, age = 15)
 ```
-
-
-
-
