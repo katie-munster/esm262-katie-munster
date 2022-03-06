@@ -1,0 +1,33 @@
+---
+title: "temperature_risk"
+author: "Katie Munster"
+date: "3/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(tidyr)
+```
+
+```{r}
+source("~/Desktop/ESM 262/esm262-katie-munster/R/temp_risk.R")
+```
+
+```{r}
+temp_data <- read_tsv("tmax.txt") %>% 
+  separate(col = "tmax date",
+           sep = " ",
+           into = c("temp", "date"),
+           remove = TRUE)
+```
+
+```{r}
+temp_risk(temp = temp_data$temp, weight = 45, age = 15)
+```
+
+
+
+
